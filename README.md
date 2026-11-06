@@ -1,4 +1,7 @@
-# Harlie Tour - Laravel
+# Website Harlie Tour
+Pengembangan Web
+
+## Laravel
 
 Website Harlie Tour ini menggunakan Laravel 12 dan Blade. Aset CSS, JavaScript,
 dan gambar berada di `public/`; tampilan utama berada di
