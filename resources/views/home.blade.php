@@ -127,7 +127,11 @@
 
         <div class="about-visual">
           <div class="about-photo">
+            <img class="about-photo-image" src="{{ asset('assets/harlie-about-travel.jpg') }}" alt="Rumah warna-warni di tepi laut Cinque Terre, Italia" loading="lazy">
             <span class="about-photo-badge">Melayani perjalanan sejak 2018</span>
+            <span class="about-photo-globe" role="img" aria-label="Perjalanan domestik dan internasional">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
+            </span>
             <div class="about-photo-copy">
               <strong>Setiap perjalanan punya cerita.</strong>
               <span>Kami hadir untuk membantu Anda sampai ke tujuan dengan nyaman.</span>
