@@ -24,15 +24,15 @@
     Sydney: 'Australia', Melbourne: 'Australia', Dubai: 'Uni Emirat Arab', Istanbul: 'Turki'
   };
   var INTERNATIONAL_ROUTES = {
-    'Jakarta-Singapore': { fare: 1250000, duration: 2160 },
-    'Jakarta-Kuala Lumpur': { fare: 1000000, duration: 1800 },
-    'Medan-Kuala Lumpur': { fare: 850000, duration: 960 },
-    'Kuala Lumpur-Singapore': { fare: 350000, duration: 360 },
-    'Kuala Lumpur-Johor Bahru': { fare: 200000, duration: 300 },
-    'Kuala Lumpur-Hat Yai': { fare: 400000, duration: 600 },
-    'Hat Yai-Bangkok': { fare: 300000, duration: 900 },
-    'Kuala Lumpur-Phuket': { fare: 350000, duration: 600 },
-    'Kuala Lumpur-Ho Chi Minh City': { fare: 600000, duration: 1200 }
+    'Jakarta-Singapore': { fare: 700000, duration: 2160 },
+    'Jakarta-Kuala Lumpur': { fare: 500000, duration: 1800 },
+    'Medan-Kuala Lumpur': { fare: 350000, duration: 960 },
+    'Kuala Lumpur-Singapore': { fare: 150000, duration: 360 },
+    'Kuala Lumpur-Johor Bahru': { fare: 80000, duration: 300 },
+    'Kuala Lumpur-Hat Yai': { fare: 250000, duration: 600 },
+    'Hat Yai-Bangkok': { fare: 200000, duration: 900 },
+    'Kuala Lumpur-Phuket': { fare: 250000, duration: 600 },
+    'Kuala Lumpur-Ho Chi Minh City': { fare: 450000, duration: 1200 }
   };
   var KELAS = {
     Ekonomi: { m: 1, seat: 14, info: 'AC, kursi standar' },
@@ -44,8 +44,13 @@
   var FLIGHT_SEATS = { Ekonomi: 180, Executive: 36, VIP: 12 };
   var MAX_PAX = 8;
   var WA = '6281221697690';
-  // Tarif Ekonomi resmi per rute. Rute yang tidak ada di sini dihitung otomatis dari jarak.
-  var TARIF = { 'Jakarta-Bandung': 75000, 'Jakarta-Yogyakarta': 145000, 'Semarang-Surabaya': 120000 };
+  var csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || '';
+  var apiBase = location.port === '8001'
+    ? location.origin
+    : (['http:', 'https:'].includes(location.protocol) ? location.protocol : 'http:') +
+      '//' + (location.hostname || '127.0.0.1') + ':8001';
+  // Tarif dasar demo untuk beberapa rute; rute lainnya dihitung dari jarak.
+  var TARIF = { 'Jakarta-Bandung': 105000, 'Jakarta-Yogyakarta': 160000, 'Semarang-Surabaya': 130000 };
 
   /* ===== PERHITUNGAN ===== */
   function km(a, b) {
@@ -65,7 +70,7 @@
     }
     var international = internationalRoute(o, d);
     if (international) return Math.round(international.fare * KELAS[k].m / 5000) * 5000;
-    var base = TARIF[o + '-' + d] || TARIF[d + '-' + o] || (45000 + km(o, d) * 0.18);
+    var base = TARIF[o + '-' + d] || TARIF[d + '-' + o] || (50000 + km(o, d) * 250);
     return Math.round(base * KELAS[k].m / 5000) * 5000;
   }
   function duration(o, d) {
@@ -100,23 +105,22 @@
     return String(Math.floor(total / 60)).padStart(2, '0') + ':' + String(total % 60).padStart(2, '0');
   }
 
-  /* ===== PENYIMPANAN (localStorage) ===== */
-  var KEY = 'harlie_bookings';
-  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; } }
-  function save(l) { try { localStorage.setItem(KEY, JSON.stringify(l)); return true; } catch (e) { return false; } }
-  function seatsLeft(id, day, k) {
-    var used = load().filter(function (b) { return b.sid === id && b.date === day; })
-      .reduce(function (s, b) { return s + b.pax; }, 0);
-    return (transportType === 'flight' ? FLIGHT_SEATS[k] : KELAS[k].seat) - used;
-  }
-  function makeCode() {
-    var c = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', s = 'HT';
-    for (var i = 0; i < 6; i++) s += c[Math.floor(Math.random() * c.length)];
-    return s;
-  }
-
   /* ===== UTIL UI ===== */
   var $ = function (i) { return document.getElementById(i); };
+  // Keep the success dialog outside transformed/overflow-hidden booking sections.
+  document.body.appendChild($('bkDone'));
+  var failureDialog = document.createElement('div');
+  failureDialog.className = 'bk-failure-dialog bk-hide';
+  failureDialog.setAttribute('role', 'alertdialog');
+  failureDialog.setAttribute('aria-modal', 'true');
+  failureDialog.setAttribute('aria-labelledby', 'bkFailureTitle');
+  failureDialog.innerHTML = '<div class="bk-failure-card"><span class="bk-failure-eyebrow">STATUS PEMESANAN</span><h3 id="bkFailureTitle"></h3><p id="bkFailureMessage"></p><button class="bk-cta" id="bkFailureClose" type="button">Kembali ke pemesanan</button></div>';
+  document.body.appendChild(failureDialog);
+  function showBookingFailure(title, message) {
+    failureDialog.querySelector('#bkFailureTitle').textContent = title;
+    failureDialog.querySelector('#bkFailureMessage').textContent = message;
+    failureDialog.classList.remove('bk-hide');
+  }
   var pax = 1, sel = null, q = null, tripType = 'domestic', transportType = 'shuttle';
   function rp(n) { return 'Rp' + n.toLocaleString('id-ID'); }
   function iso(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
@@ -125,6 +129,12 @@
   function el(tag, text, cls) { var e = document.createElement(tag); if (text) e.textContent = text; if (cls) e.className = cls; return e; }
   function view(id) { ['bkSearch', 'bkForm', 'bkDone'].forEach(function (v) { $(v).classList.toggle('bk-hide', v !== id); }); }
   function clearRes() { $('bkRes').innerHTML = ''; show($('bkErr'), ''); }
+  function updateMinimumTravelDate() {
+    var today = iso(new Date()), dateField = $('bkDate');
+    dateField.min = today;
+    if (dateField.value && dateField.value < today) dateField.value = today;
+    return today;
+  }
   function fill(s, label, cities) {
     s.innerHTML = ''; s.appendChild(el('option', label)).value = '';
     cities.forEach(function (c) { s.appendChild(el('option', c + ', ' + COUNTRIES[c])).value = c; });
@@ -157,9 +167,9 @@
     $('bkInternational').setAttribute('aria-pressed', String(type === 'international'));
     $('bkInternationalNote').hidden = type !== 'international' && transportType !== 'flight';
     if (transportType === 'flight') {
-      $('bkInternationalNote').textContent = 'Jadwal dan tarif pesawat adalah estimasi simulasi, bukan ketersediaan atau harga langsung maskapai. Konfirmasikan tiket dan persyaratan perjalanan sebelum berangkat.';
+      $('bkInternationalNote').textContent = 'Jadwal dan tarif pesawat di sini hanya perkiraan, bukan data langsung maskapai. Hubungi kami untuk memastikan harga dan ketersediaan.';
     } else {
-      $('bkInternationalNote').textContent = 'Rute lintas negara menampilkan simulasi jadwal dan estimasi tarif. Pastikan dokumen perjalanan dan persyaratan imigrasi, serta konfirmasi ketersediaan layanan sebelum berangkat.';
+      $('bkInternationalNote').textContent = 'Untuk perjalanan ke luar negeri, pastikan dokumen perjalanan Anda lengkap. Hubungi kami untuk memastikan jadwal dan layanan.';
     }
     clearRes();
   }
@@ -217,7 +227,7 @@
     r.addEventListener('change', clearRes);
     l.appendChild(r); l.appendChild(el('b', k)); l.appendChild(el('small', KELAS[k].info)); $('bkClasses').appendChild(l);
   });
-  $('bkDate').min = iso(new Date());
+  updateMinimumTravelDate();
   document.querySelectorAll('.bk-chip[data-off]').forEach(function (c) {
     c.onclick = function () { var d = new Date(); d.setDate(d.getDate() + Number(c.dataset.off)); $('bkDate').value = iso(d); clearRes(); };
   });
@@ -242,43 +252,40 @@
 
   /* ===== CARI JADWAL ===== */
   $('bkGo').onclick = function () {
+    var today = updateMinimumTravelDate();
     clearRes();
     var from = $('bkFrom').value, to = $('bkTo').value, day = $('bkDate').value;
-    if (!from || !to) return show($('bkErr'), 'Pilih kota asal dan tujuan dulu.');
-    if (from === to) return show($('bkErr'), 'Kota asal dan tujuan tidak boleh sama.');
+    if (!from || !to) return show($('bkErr'), 'Pilih kota asal dan tujuan.');
+    if (from === to) return show($('bkErr'), 'Kota asal dan tujuan harus berbeda.');
     if (tripType === 'international' && COUNTRIES[from] === COUNTRIES[to]) {
-      return show($('bkErr'), 'Pilih rute yang melewati perbatasan negara.');
+      return show($('bkErr'), 'Pilih rute yang melintasi negara.');
     }
     if (!day) return show($('bkErr'), 'Pilih tanggal keberangkatan.');
     var now = new Date();
-    if (day < iso(now)) return show($('bkErr'), 'Tanggal sudah lewat. Pilih tanggal lain.');
+    if (day < today) return show($('bkErr'), 'Tanggal tersebut sudah lewat. Pilih tanggal lain.');
     var hm = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
     var k = document.querySelector('input[name=bkKelas]:checked').value;
     q = { from: from, to: to, date: day, kelas: k, type: tripType };
     var dur = duration(from, to), unit = price(from, to, k);
     var times = transportType === 'flight' ? FLIGHT_TIMES : TIMES;
     var list = times.filter(function (t) { return day !== iso(now) || t > hm; });
-    if (!list.length) return show($('bkErr'), 'Tidak ada jadwal tersisa untuk tanggal ini. Coba tanggal lain.');
+    if (!list.length) return show($('bkErr'), 'Tidak ada keberangkatan lagi hari ini. Silakan pilih tanggal lain.');
     var resultsHeading = el('div', '', 'bk-results-heading');
-    resultsHeading.appendChild(el('strong', 'Jadwal tersedia'));
+    resultsHeading.appendChild(el('strong', 'Pilihan jadwal'));
     resultsHeading.appendChild(el('span', transportType === 'flight'
-      ? 'Jadwal dan tarif penerbangan merupakan estimasi, bukan data langsung maskapai.'
-      : tripType === 'international'
-        ? 'Jadwal dan tarif rute internasional merupakan simulasi.'
-        : 'Jadwal dan ketersediaan kursi dapat berubah.'));
+      ? 'Jadwal dan tarif pesawat hanya perkiraan. Hubungi kami untuk memastikan ketersediaannya.'
+      : 'Jadwal dan tarif ini merupakan data demo. Ketersediaan akan diperiksa saat Anda memesan.'));
     $('bkRes').appendChild(resultsHeading);
     list.forEach(function (t) {
-      var id = [transportType, from, to, t, k].join('|'), left = seatsLeft(id, day, k), ok = left >= pax;
       var it = el('div', '', 'bk-item'), a = el('div'), p = el('div');
       a.appendChild(el('b', t, 't'));
       a.appendChild(el('small', (transportType === 'flight' ? 'Pesawat · ' : 'Shuttle · ') +
         (tripType === 'international' ? routeName(from, to) : from + ' → ' + to) + ' · ' + classLabel(k)));
-      a.appendChild(el('small', arrivalLabel(day, t, dur) + ' · ' +
-        (ok ? 'sisa ' + left + ' kursi' : 'kursi tidak cukup')));
+      a.appendChild(el('small', arrivalLabel(day, t, dur) + ' · Ketersediaan diperiksa saat pemesanan'));
       p.appendChild(el('b', rp(unit * pax))); p.appendChild(el('small', rp(unit) + ' / orang'));
-      var b = el('button', 'Pilih', 'bk-pick'); b.type = 'button'; b.disabled = !ok;
+      var b = el('button', 'Pilih', 'bk-pick'); b.type = 'button';
       b.onclick = function () {
-        sel = { id: id, depart: t, price: unit };
+        sel = { depart: t, price: unit };
         $('bkPicked').textContent = (transportType === 'flight' ? 'Pesawat · ' : 'Shuttle · ') +
           (tripType === 'international' ? routeName(from, to) : from + ' → ' + to) + ', ' +
           nice(day) + ', ' + t + ', ' + classLabel(k) + ', ' + pax + ' penumpang, ' + rp(unit * pax);
@@ -287,33 +294,118 @@
       it.appendChild(a); it.appendChild(p); it.appendChild(b); $('bkRes').appendChild(it);
     });
   };
-  $('bkBack').onclick = function () { view('bkSearch'); };
+  $('bkBack').onclick = function () { clearRes(); view('bkSearch'); };
 
   /* ===== PESAN ===== */
-  $('bkPay').onclick = function () {
+  $('bkPay').onclick = async function () {
+    var today = updateMinimumTravelDate();
+    if (q && q.date < today) {
+      showBookingFailure('Jadwal keberangkatan sudah lewat', 'Booking belum dikirim. Kembali ke jadwal, pilih tanggal '+nice(today)+' atau setelahnya, lalu cari jadwal baru.');
+      return;
+    }
     var name = $('bkName').value.trim(), phone = $('bkPhone').value.trim(), digits = phone.replace(/\D/g, '');
-    if (name.length < 2 || digits.length < 9 || digits.length > 15) return show($('bkErr2'), 'Isi nama dan nomor HP dengan benar.');
-    if (seatsLeft(sel.id, q.date, q.kelas) < pax) return show($('bkErr2'), 'Kursi tidak cukup. Silakan cari jadwal lain.');
-    var list = load(), code;
-    do { code = makeCode(); } while (list.some(function (b) { return b.code === code; }));
-    var rec = { code: code, sid: sel.id, origin: q.from, dest: q.to, tripType: q.type,
-      transportType: transportType, depart: sel.depart, kelas: q.kelas,
-      date: q.date, pax: pax, name: name, phone: phone, total: sel.price * pax };
-    list.push(rec);
-    if (!save(list)) return show($('bkErr2'), 'Pesanan tidak bisa disimpan. Cek pengaturan penyimpanan browser.');
-    $('bkCode').textContent = code;
-    $('bkDoneMessage').textContent = rec.transportType === 'flight'
-      ? 'Jadwal dan tarif pesawat masih estimasi. Kirim kode ini melalui WhatsApp untuk mengecek ketersediaan dan harga aktual.'
-      : 'Permintaan perjalanan siap dikonfirmasi. Simpan kode ini dan kirim ke WhatsApp kami.';
+    if (name.length < 2 || digits.length < 9 || digits.length > 15) {
+      showBookingFailure('Booking belum dikirim', 'Periksa kembali nama dan nomor WhatsApp. Nama minimal 2 karakter dan nomor harus berisi 9 sampai 15 digit.');
+      return;
+    }
+    var button = $('bkPay'), originalText = button.textContent;
+    button.disabled = true;
+      button.textContent = 'Menyimpan pesanan...';
+    show($('bkErr2'), '');
+    var bookingRequestStarted = false;
+    var bookingWasSaved = false;
+
+    try {
+      var tokenResponse = await fetch(new URL('/csrf-token', apiBase), {
+        headers: { 'Accept': 'application/json' },
+        credentials: 'include',
+        cache: 'no-store'
+      });
+      if (!tokenResponse.ok) throw new Error('Laravel tidak dapat memberikan token keamanan.');
+      var tokenData = await tokenResponse.json();
+      csrfToken = tokenData.token || '';
+      if (!csrfToken) throw new Error('Token keamanan kosong. Muat ulang halaman lalu coba lagi.');
+
+      var bookingUrl = new URL($('bkSearch').dataset.bookingEndpoint || '/bookings', apiBase);
+      var bookingRequest = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'X-CSRF-TOKEN': csrfToken
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          origin: q.from,
+          destination: q.to,
+          travel_date: q.date,
+          departure_time: sel.depart,
+          transport_type: transportType,
+          travel_class: q.kelas,
+          passenger_count: pax,
+          customer_name: name,
+          customer_phone: phone
+        })
+      };
+      bookingRequestStarted = true;
+      var response = await fetch(bookingUrl, bookingRequest);
+      if (response.status === 419) {
+        var refreshedTokenResponse = await fetch(new URL('/csrf-token', apiBase), {
+          headers: { 'Accept': 'application/json' },
+          credentials: 'include',
+          cache: 'no-store'
+        });
+        var refreshedToken = refreshedTokenResponse.ok ? await refreshedTokenResponse.json() : {};
+        if (!refreshedToken.token) throw new Error('Sesi keamanan berubah. Muat ulang halaman lalu coba lagi.');
+        csrfToken = refreshedToken.token;
+        bookingRequest.headers['X-CSRF-TOKEN'] = csrfToken;
+        response = await fetch(bookingUrl, bookingRequest);
+      }
+      var result = await response.json().catch(function () { return {}; });
+      if (!response.ok) {
+        var firstError = result.errors && Object.values(result.errors)[0];
+        var errorMessage = firstError ? firstError[0] : (result.message || 'Pesanan belum berhasil disimpan. Silakan coba lagi.');
+        showBookingFailure(response.status >= 500 ? 'Status booking belum bisa dipastikan' : 'Booking belum tersimpan', errorMessage);
+        return;
+      }
+
+      bookingWasSaved = true;
+      if (!result.booking) {
+        showBookingFailure('Booking tersimpan', 'Server menerima booking, tetapi detail konfirmasi tidak terbaca. Jangan kirim ulang; periksa daftar booking admin.');
+        return;
+      }
+      var rec = { code: result.booking.booking_code, origin: q.from, dest: q.to, tripType: q.type,
+        transportType: transportType, depart: sel.depart, kelas: q.kelas,
+        date: q.date, pax: result.booking.passenger_count, name: name, phone: phone,
+        total: result.booking.total_fare };
+      $('bkCode').textContent = rec.code;
+      $('bkDoneMessage').textContent = rec.transportType === 'flight'
+        ? 'Jadwal dan tarif pesawat masih berupa perkiraan. Klik tombol WhatsApp untuk mengirim kode dan mengecek ketersediaan.'
+        : 'Pesanan tercatat. Klik tombol WhatsApp di bawah untuk mengirim konfirmasi; kursi ditahan selama 30 menit.';
     $('bkDetail').innerHTML = ''; $('bkDetail').appendChild(summary(rec));
-    var msg = 'Halo Harlie Tour, saya ingin konfirmasi pesanan.\nKode: ' + code +
+      var msg = 'Halo Harlie Tour, saya ingin konfirmasi pesanan.\nKode: ' + rec.code +
       '\nJenis perjalanan: ' + (rec.tripType === 'international' ? 'Antar Negara' : 'Antar Kota') +
       '\nModa: ' + (rec.transportType === 'flight' ? 'Pesawat (estimasi)' : 'Shuttle') +
       '\nRute: ' + (rec.tripType === 'international' ? routeName(rec.origin, rec.dest) : rec.origin + ' → ' + rec.dest) +
       '\nTanggal: ' + nice(rec.date) + ', ' + rec.depart + '\nKelas: ' + classLabel(rec.kelas) + '\nPenumpang: ' + rec.pax +
       ' orang\nNama: ' + rec.name + '\nTotal: ' + rp(rec.total);
-    $('bkWa').href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(msg);
-    view('bkDone');
+      var whatsappUrl = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(msg);
+      $('bkWa').href = whatsappUrl;
+      view('bkDone');
+    } catch (error) {
+      if (bookingWasSaved) {
+        showBookingFailure('Booking berhasil tersimpan', 'Konfirmasi WhatsApp gagal ditampilkan. Jangan kirim ulang booking; periksa daftar booking admin.');
+      } else if (bookingRequestStarted) {
+        showBookingFailure('Status booking belum bisa dipastikan', 'Koneksi terputus saat mengirim booking. Periksa daftar booking admin sebelum mencoba lagi agar tidak membuat pesanan ganda.');
+      } else {
+        showBookingFailure('Booking belum terkirim', error.message || 'Tidak dapat terhubung ke Laravel. Pastikan server berjalan, lalu coba lagi.');
+      }
+    } finally {
+      button.disabled = false;
+      button.textContent = originalText;
+    }
   };
+  $('bkFailureClose').onclick = function () { failureDialog.classList.add('bk-hide'); };
   $('bkAgain').onclick = function () { clearRes(); view('bkSearch'); };
+
 })();

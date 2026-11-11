@@ -3,32 +3,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Harlie Tour | Perjalanan Nyaman di Dalam dan Luar Negeri</title>
-  <meta name="description" content="Harlie Tour membantu Anda merencanakan perjalanan nyaman melalui layanan shuttle dan pilihan perjalanan udara.">
+  <title>Harlie Tour | Booking Perjalanan dan Paket Wisata</title>
+  <meta name="description" content="Cari rute shuttle, lihat perkiraan perjalanan udara, dan jelajahi pilihan paket wisata bersama Harlie Tour.">
+  <meta name="theme-color" content="#0c4a6e">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Harlie Tour | Booking Perjalanan dan Paket Wisata">
+  <meta property="og:description" content="Cari rute shuttle, lihat perkiraan perjalanan udara, dan jelajahi pilihan paket wisata bersama Harlie Tour.">
+  <link rel="icon" type="image/png" href="assets/harlie-tour-logo.png?v=4">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=14">
 </head>
 <body>
 
   <!-- NAVBAR -->
-  <nav class="navbar" id="navbar">
+  <nav class="navbar" id="navbar" aria-label="Navigasi utama">
     <div class="container nav-inner">
       <a href="#beranda" class="logo">
         <img class="logo-image" src="assets/harlie-tour-logo.png" alt="Logo Harlie Tour Indonesia">
       </a>
 
       <ul class="nav-links" id="navLinks">
-        <li><a href="#beranda" class="nav-link active">Beranda</a></li>
-        <li><a href="#tentang" class="nav-link">Tentang Kami</a></li>
-        <li><a href="#booking" class="nav-link">Booking</a></li>
-        <li><a href="#ulasan" class="nav-link">Ulasan</a></li>
+        <li><a href="#beranda" class="nav-link active">Home</a></li>
+        <li><a href="#paket-tour" class="nav-link nav-link-highlight">Paket Wisata</a></li>
+        <li><a href="#booking" class="nav-link nav-link-highlight">Booking Tiket</a></li>
+        <li class="nav-dropdown" id="aboutDropdown">
+          <button class="nav-link nav-dropdown-toggle" id="aboutMenuToggle" type="button" aria-expanded="false" aria-controls="aboutSubmenu">
+            About
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 6 4.5 4 4.5-4"/></svg>
+          </button>
+          <ul class="nav-submenu" id="aboutSubmenu">
+            <li><a href="#tentang">Tentang Harlie Tour</a></li>
+            <li><a href="#info-perjalanan">Informasi Perjalanan</a></li>
+            <li><a href="#ulasan">Ulasan Pelanggan</a></li>
+          </ul>
+        </li>
+        <li><a href="#dokumentasi" class="nav-link">Dokumentasi</a></li>
+        <li><a href="#kontak" class="nav-link">Hubungi Kami</a></li>
       </ul>
 
       <div class="nav-right">
-        <a href="#booking" class="btn btn-primary btn-nav">Pesan Tiket</a>
-        <button class="hamburger" id="hamburger" aria-label="Menu">
+        <button class="hamburger" id="hamburger" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="navLinks">
           <span></span><span></span><span></span>
         </button>
       </div>
@@ -39,38 +55,38 @@
   <section class="hero" id="beranda">
     <div class="hero-bg"></div>
     <div class="container hero-content">
-      <div class="hero-badge">Perjalanan nyaman, ke mana pun tujuanmu</div>
+      <div class="hero-badge">Shuttle antarkota dan pilihan perjalanan udara</div>
       <h1 class="hero-title">
-        Melangkah lebih jauh,<br>
-        <span class="text-gradient">menjelajah dunia</span>
+        Berangkat ke kota tujuan,<br>
+        <span class="text-gradient">dengan lebih mudah</span>
       </h1>
       <p class="hero-desc">
-        Dari kota-kota di Indonesia hingga destinasi lintas negara, rencanakan perjalanan nyaman bersama Harlie Tour.
+        Pilih shuttle antarkota atau lihat perkiraan perjalanan udara. Hubungi tim kami untuk memastikan jadwal dan harga.
       </p>
       <div class="hero-actions">
-        <a href="#booking" class="btn btn-primary btn-lg">Booking Sekarang</a>
-        <a href="#tentang" class="btn btn-outline btn-lg">Pelajari Lebih Lanjut</a>
+        <a href="#booking" class="btn btn-primary btn-lg">Cari Perjalanan</a>
+        <a href="#tentang" class="btn btn-outline btn-lg">Tentang Harlie Tour</a>
       </div>
 
       <div class="hero-stats">
         <div class="stat-item">
-          <strong>50.000+</strong>
-          <span>Penumpang / bulan</span>
+          <strong>Shuttle</strong>
+          <span>Antarkota &amp; lintas negara</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat-item">
-          <strong>120+</strong>
-          <span>Armada aktif</span>
+          <strong>Pesawat</strong>
+          <span>Jadwal dan tarif perkiraan</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat-item">
-          <strong>35+</strong>
-          <span>Kota tujuan</span>
+          <strong>3 Kelas</strong>
+          <span>Ekonomi, Executive, dan VIP</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat-item">
-          <strong>4.9</strong>
-          <span>Rating pelanggan</span>
+          <strong>WhatsApp</strong>
+          <span>Konfirmasi pemesanan</span>
         </div>
       </div>
     </div>
@@ -81,13 +97,13 @@
     <div class="container">
       <div class="about-grid">
         <div class="about-content">
-          <span class="section-label">Mengenal Kami</span>
-          <h2>Mitra perjalanan yang mengutamakan kenyamanan</h2>
+          <span class="section-label">Tentang Harlie Tour</span>
+          <h2>Layanan perjalanan Harlie Tour</h2>
           <p class="about-lead">
-            Harlie Tour membantu perjalanan Anda terasa lebih mudah melalui layanan shuttle antarkota yang nyaman dan informasi perjalanan lintas negara.
+            Kami melayani shuttle antarkota dan membantu pelanggan mencari pilihan perjalanan udara.
           </p>
           <p>
-            Sejak 2018, kami berfokus pada pengalaman perjalanan yang aman, nyaman, dan praktis. Kami terus meningkatkan kualitas layanan, fasilitas armada, serta kemudahan pelanggan dalam merencanakan perjalanan.
+            Pilih rute dan tanggal perjalanan, lalu kirim permintaan pemesanan kepada tim kami untuk dikonfirmasi.
           </p>
 
           <div class="about-points">
@@ -97,7 +113,7 @@
               </div>
               <div>
                 <strong>Keselamatan sebagai prioritas</strong>
-                <span>Perjalanan didukung pengemudi berpengalaman dan perhatian pada kondisi armada.</span>
+                <span>Pengemudi berpengalaman dan armada yang terawat mendukung perjalanan Anda.</span>
               </div>
             </div>
             <div class="point">
@@ -106,7 +122,7 @@
               </div>
               <div>
                 <strong>Informasi perjalanan yang jelas</strong>
-                <span>Pilihan rute dan jadwal membantu Anda merencanakan perjalanan dengan lebih baik.</span>
+                <span>Lihat pilihan rute dan jadwal sebelum mengirim permintaan pemesanan.</span>
               </div>
             </div>
             <div class="point">
@@ -115,7 +131,7 @@
               </div>
               <div>
                 <strong>Dukungan yang ramah</strong>
-                <span>Tim kami siap membantu menjawab pertanyaan dan kebutuhan perjalanan Anda.</span>
+                <span>Hubungi tim kami untuk menanyakan jadwal dan layanan.</span>
               </div>
             </div>
           </div>
@@ -128,23 +144,23 @@
         <div class="about-visual">
           <div class="about-photo">
             <img class="about-photo-image" src="assets/harlie-about-travel.jpg" alt="Rumah warna-warni di tepi laut Cinque Terre, Italia" loading="lazy">
-            <span class="about-photo-badge">Melayani perjalanan sejak 2018</span>
+            <span class="about-photo-badge">Temukan perjalanan berikutnya</span>
             <span class="about-photo-globe" role="img" aria-label="Perjalanan domestik dan internasional">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
             </span>
             <div class="about-photo-copy">
-              <strong>Setiap perjalanan punya cerita.</strong>
-              <span>Kami hadir untuk membantu Anda sampai ke tujuan dengan nyaman.</span>
+              <strong>Mau ke mana hari ini?</strong>
+              <span>Cek rute dan tanggal, lalu hubungi kami untuk memastikan jadwal.</span>
             </div>
           </div>
           <div class="about-card-main">
             <div class="about-card-stat">
               <span class="big-num">8+</span>
-              <span>Tahun Pengalaman</span>
+              <span>Tahun pengalaman</span>
             </div>
             <div class="about-card-stat">
               <span class="big-num">200+</span>
-              <span>Pool & Outlet</span>
+              <span>Pool dan outlet</span>
             </div>
             <div class="about-card-stat">
               <span class="big-num">98%</span>
@@ -160,34 +176,177 @@
     </div>
   </section>
 
-  <!-- BOOKING -->
-  <section class="section booking-section" id="booking">
+  <!-- PAKET TOUR -->
+  <section class="section tour-packages-section" id="paket-tour">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Pilih Destinasi</span>
+        <h2>Paket Tour Harlie</h2>
+        <p>Pilih destinasi favoritmu. Hubungi tim kami untuk detail itinerary, jadwal, dan harga terbaru.</p>
+      </div>
+
+      <div class="tour-package-group">
+        <div class="tour-group-heading"><span>01</span><h3>Destinasi Domestik</h3></div>
+        <div class="tour-package-grid">
+          <article class="tour-card">
+            <div class="tour-card-visual tour-scene-mountain tour-destination-yogyakarta" aria-hidden="true"></div>
+            <div class="tour-card-content"><p class="tour-location">Yogyakarta, DI Yogyakarta</p><h3>Yogyakarta</h3>
+              <div class="tour-card-price"><strong>Konsultasi harga</strong><span>/ orang</span></div>
+              <div class="tour-card-footer"><div><span>Durasi perjalanan</span><strong>Menyesuaikan paket</strong></div><a href="https://wa.me/6281221697690?text=Halo%20Harlie%20Tour%2C%20saya%20ingin%20menanyakan%20paket%20tour%20Yogyakarta." target="_blank" rel="noopener" aria-label="Tanya paket tour Yogyakarta">↗</a></div>
+            </div>
+          </article>
+          <article class="tour-card">
+            <div class="tour-card-visual tour-scene-coast tour-destination-pangandaran" aria-hidden="true"></div>
+            <div class="tour-card-content"><p class="tour-location">Pangandaran, Jawa Barat</p><h3>Pangandaran</h3>
+              <div class="tour-card-price"><strong>Konsultasi harga</strong><span>/ orang</span></div>
+              <div class="tour-card-footer"><div><span>Durasi perjalanan</span><strong>Menyesuaikan paket</strong></div><a href="https://wa.me/6281221697690?text=Halo%20Harlie%20Tour%2C%20saya%20ingin%20menanyakan%20paket%20tour%20Pangandaran." target="_blank" rel="noopener" aria-label="Tanya paket tour Pangandaran">↗</a></div>
+            </div>
+          </article>
+          <article class="tour-card">
+            <div class="tour-card-visual tour-scene-city tour-destination-bandung" aria-hidden="true"></div>
+            <div class="tour-card-content"><p class="tour-location">Bandung, Jawa Barat</p><h3>Bandung</h3>
+              <div class="tour-card-price"><strong>Konsultasi harga</strong><span>/ orang</span></div>
+              <div class="tour-card-footer"><div><span>Durasi perjalanan</span><strong>Menyesuaikan paket</strong></div><a href="https://wa.me/6281221697690?text=Halo%20Harlie%20Tour%2C%20saya%20ingin%20menanyakan%20paket%20tour%20Bandung." target="_blank" rel="noopener" aria-label="Tanya paket tour Bandung">↗</a></div>
+            </div>
+          </article>
+          <article class="tour-card">
+            <div class="tour-card-visual tour-scene-green tour-destination-banyuwangi" aria-hidden="true"></div>
+            <div class="tour-card-content"><p class="tour-location">Banyuwangi, Jawa Timur</p><h3>Banyuwangi</h3>
+              <div class="tour-card-price"><strong>Konsultasi harga</strong><span>/ orang</span></div>
+              <div class="tour-card-footer"><div><span>Durasi perjalanan</span><strong>Menyesuaikan paket</strong></div><a href="https://wa.me/6281221697690?text=Halo%20Harlie%20Tour%2C%20saya%20ingin%20menanyakan%20paket%20tour%20Banyuwangi." target="_blank" rel="noopener" aria-label="Tanya paket tour Banyuwangi">↗</a></div>
+            </div>
+          </article>
+          <article class="tour-card">
+            <div class="tour-card-visual tour-scene-island tour-destination-lombok" aria-hidden="true"></div>
+            <div class="tour-card-content"><p class="tour-location">Lombok, Nusa Tenggara Barat</p><h3>Lombok</h3>
+              <div class="tour-card-price"><strong>Konsultasi harga</strong><span>/ orang</span></div>
+              <div class="tour-card-footer"><div><span>Durasi perjalanan</span><strong>Menyesuaikan paket</strong></div><a href="https://wa.me/6281221697690?text=Halo%20Harlie%20Tour%2C%20saya%20ingin%20menanyakan%20paket%20tour%20Lombok." target="_blank" rel="noopener" aria-label="Tanya paket tour Lombok">↗</a></div>
+            </div>
+          </article>
+          <article class="tour-card">
+            <div class="tour-card-visual tour-scene-tropical tour-destination-bali" aria-hidden="true"></div>
+            <div class="tour-card-content"><p class="tour-location">Bali, Indonesia</p><h3>Bali</h3>
+              <div class="tour-card-price"><strong>Konsultasi harga</strong><span>/ orang</span></div>
+              <div class="tour-card-footer"><div><span>Durasi perjalanan</span><strong>Menyesuaikan paket</strong></div><a href="https://wa.me/6281221697690?text=Halo%20Harlie%20Tour%2C%20saya%20ingin%20menanyakan%20paket%20tour%20Bali." target="_blank" rel="noopener" aria-label="Tanya paket tour Bali">↗</a></div>
+            </div>
+          </article>
+          <article class="tour-card">
+            <div class="tour-card-visual tour-scene-mountain tour-destination-garut" aria-hidden="true"></div>
+            <div class="tour-card-content"><p class="tour-location">Garut, Jawa Barat</p><h3>Garut</h3>
+              <div class="tour-card-price"><strong>Konsultasi harga</strong><span>/ orang</span></div>
+              <div class="tour-card-footer"><div><span>Durasi perjalanan</span><strong>Menyesuaikan paket</strong></div><a href="https://wa.me/6281221697690?text=Halo%20Harlie%20Tour%2C%20saya%20ingin%20menanyakan%20paket%20tour%20Garut." target="_blank" rel="noopener" aria-label="Tanya paket tour Garut">↗</a></div>
+            </div>
+          </article>
+          <article class="tour-card">
+            <div class="tour-card-visual tour-scene-island tour-destination-pulau-seribu" aria-hidden="true"></div>
+            <div class="tour-card-content"><p class="tour-location">Kepulauan Seribu, DKI Jakarta</p><h3>Pulau Seribu</h3>
+              <div class="tour-card-price"><strong>Konsultasi harga</strong><span>/ orang</span></div>
+              <div class="tour-card-footer"><div><span>Durasi perjalanan</span><strong>Menyesuaikan paket</strong></div><a href="https://wa.me/6281221697690?text=Halo%20Harlie%20Tour%2C%20saya%20ingin%20menanyakan%20paket%20tour%20Pulau%20Seribu." target="_blank" rel="noopener" aria-label="Tanya paket tour Pulau Seribu">↗</a></div>
+            </div>
+          </article>
+          <article class="tour-card">
+            <div class="tour-card-visual tour-scene-coast tour-destination-lampung" aria-hidden="true"></div>
+            <div class="tour-card-content"><p class="tour-location">Lampung, Sumatra</p><h3>Lampung</h3>
+              <div class="tour-card-price"><strong>Konsultasi harga</strong><span>/ orang</span></div>
+              <div class="tour-card-footer"><div><span>Durasi perjalanan</span><strong>Menyesuaikan paket</strong></div><a href="https://wa.me/6281221697690?text=Halo%20Harlie%20Tour%2C%20saya%20ingin%20menanyakan%20paket%20tour%20Lampung." target="_blank" rel="noopener" aria-label="Tanya paket tour Lampung">↗</a></div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="tour-package-group tour-international-group">
+        <div class="tour-group-heading"><span>02</span><h3>Destinasi Internasional</h3></div>
+        <div class="tour-package-grid">
+          <article class="tour-card">
+            <div class="tour-card-visual tour-scene-japan" aria-hidden="true"><span>🗻</span></div>
+            <div class="tour-card-content"><p class="tour-location">Jepang</p><h3>Jepang</h3>
+              <div class="tour-card-price"><strong>Konsultasi harga</strong><span>/ orang</span></div>
+              <div class="tour-card-footer"><div><span>Durasi perjalanan</span><strong>Menyesuaikan paket</strong></div><a href="https://wa.me/6281221697690?text=Halo%20Harlie%20Tour%2C%20saya%20ingin%20menanyakan%20paket%20tour%20Jepang." target="_blank" rel="noopener" aria-label="Tanya paket tour Jepang">↗</a></div>
+            </div>
+          </article>
+          <article class="tour-card">
+            <div class="tour-card-visual tour-scene-china" aria-hidden="true"><span>🏯</span></div>
+            <div class="tour-card-content"><p class="tour-location">China</p><h3>China</h3>
+              <div class="tour-card-price"><strong>Konsultasi harga</strong><span>/ orang</span></div>
+              <div class="tour-card-footer"><div><span>Durasi perjalanan</span><strong>Menyesuaikan paket</strong></div><a href="https://wa.me/6281221697690?text=Halo%20Harlie%20Tour%2C%20saya%20ingin%20menanyakan%20paket%20tour%20China." target="_blank" rel="noopener" aria-label="Tanya paket tour China">↗</a></div>
+            </div>
+          </article>
+          <article class="tour-card">
+            <div class="tour-card-visual tour-scene-korea" aria-hidden="true"><span>🌆</span></div>
+            <div class="tour-card-content"><p class="tour-location">Korea Selatan</p><h3>Korea</h3>
+              <div class="tour-card-price"><strong>Konsultasi harga</strong><span>/ orang</span></div>
+              <div class="tour-card-footer"><div><span>Durasi perjalanan</span><strong>Menyesuaikan paket</strong></div><a href="https://wa.me/6281221697690?text=Halo%20Harlie%20Tour%2C%20saya%20ingin%20menanyakan%20paket%20tour%20Korea." target="_blank" rel="noopener" aria-label="Tanya paket tour Korea">↗</a></div>
+            </div>
+          </article>
+          <article class="tour-card">
+            <div class="tour-card-visual tour-scene-malaysia" aria-hidden="true"><span>🏙️</span></div>
+            <div class="tour-card-content"><p class="tour-location">Malaysia</p><h3>Malaysia</h3>
+              <div class="tour-card-price"><strong>Konsultasi harga</strong><span>/ orang</span></div>
+              <div class="tour-card-footer"><div><span>Durasi perjalanan</span><strong>Menyesuaikan paket</strong></div><a href="https://wa.me/6281221697690?text=Halo%20Harlie%20Tour%2C%20saya%20ingin%20menanyakan%20paket%20tour%20Malaysia." target="_blank" rel="noopener" aria-label="Tanya paket tour Malaysia">↗</a></div>
+            </div>
+          </article>
+          <article class="tour-card">
+            <div class="tour-card-visual tour-scene-singapore" aria-hidden="true"><span>🦁</span></div>
+            <div class="tour-card-content"><p class="tour-location">Singapura</p><h3>Singapur</h3>
+              <div class="tour-card-price"><strong>Konsultasi harga</strong><span>/ orang</span></div>
+              <div class="tour-card-footer"><div><span>Durasi perjalanan</span><strong>Menyesuaikan paket</strong></div><a href="https://wa.me/6281221697690?text=Halo%20Harlie%20Tour%2C%20saya%20ingin%20menanyakan%20paket%20tour%20Singapur." target="_blank" rel="noopener" aria-label="Tanya paket tour Singapur">↗</a></div>
+            </div>
+          </article>
+          <article class="tour-card">
+            <div class="tour-card-visual tour-scene-vietnam" aria-hidden="true"><span>🏮</span></div>
+            <div class="tour-card-content"><p class="tour-location">Vietnam</p><h3>Vietnam</h3>
+              <div class="tour-card-price"><strong>Konsultasi harga</strong><span>/ orang</span></div>
+              <div class="tour-card-footer"><div><span>Durasi perjalanan</span><strong>Menyesuaikan paket</strong></div><a href="https://wa.me/6281221697690?text=Halo%20Harlie%20Tour%2C%20saya%20ingin%20menanyakan%20paket%20tour%20Vietnam." target="_blank" rel="noopener" aria-label="Tanya paket tour Vietnam">↗</a></div>
+            </div>
+          </article>
+          <article class="tour-card">
+            <div class="tour-card-visual tour-scene-thailand" aria-hidden="true"><span>🛕</span></div>
+            <div class="tour-card-content"><p class="tour-location">Thailand</p><h3>Thailand</h3>
+              <div class="tour-card-price"><strong>Konsultasi harga</strong><span>/ orang</span></div>
+              <div class="tour-card-footer"><div><span>Durasi perjalanan</span><strong>Menyesuaikan paket</strong></div><a href="https://wa.me/6281221697690?text=Halo%20Harlie%20Tour%2C%20saya%20ingin%20menanyakan%20paket%20tour%20Thailand." target="_blank" rel="noopener" aria-label="Tanya paket tour Thailand">↗</a></div>
+            </div>
+          </article>
+          <article class="tour-card">
+            <div class="tour-card-visual tour-scene-turkey" aria-hidden="true"><span>🕌</span></div>
+            <div class="tour-card-content"><p class="tour-location">Turki</p><h3>Turkey</h3>
+              <div class="tour-card-price"><strong>Konsultasi harga</strong><span>/ orang</span></div>
+              <div class="tour-card-footer"><div><span>Durasi perjalanan</span><strong>Menyesuaikan paket</strong></div><a href="https://wa.me/6281221697690?text=Halo%20Harlie%20Tour%2C%20saya%20ingin%20menanyakan%20paket%20tour%20Turkey." target="_blank" rel="noopener" aria-label="Tanya paket tour Turkey">↗</a></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING TIKET -->
+  <section class="booking-menu-group" id="booking" aria-label="Booking tiket dan rute populer">
+  <section class="section booking-section">
     <div class="container">
       <div class="section-header">
         <span class="section-label">Rencanakan Perjalanan</span>
-        <h2>Booking Perjalanan</h2>
-        <p>Tentukan tujuan, tanggal, dan kelas perjalanan. Kami bantu temukan pilihan yang sesuai.</p>
+        <h2>Pilih Rute dan Jadwal</h2>
+        <p>Pilih kota, tanggal, moda, dan kelas untuk melihat perkiraan jadwal serta tarif.</p>
       </div>
 
       <div class="bk">
         <!-- Langkah 1: cari jadwal -->
-        <div id="bkSearch">
+        <div id="bkSearch" data-booking-endpoint="/bookings">
           <div class="bk-mode-wrap">
             <div class="bk-field-heading">
               <span class="bk-step-number">01</span>
               <span>
                 <strong>Pilih jenis perjalanan</strong>
-                <small>Mulai dengan menentukan tujuan perjalanan Anda</small>
+                <small>Pilih perjalanan dalam negeri atau lintas negara.</small>
               </span>
             </div>
             <div class="bk-mode" role="group" aria-label="Jenis perjalanan">
               <button class="bk-mode-option active" id="bkDomestic" type="button" aria-pressed="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5M5.5 10v9h13v-9M9 19v-5h6v5"/></svg>
-                <span><strong>Antar Kota</strong><small>Jelajahi berbagai kota di Indonesia</small></span>
+                <span><strong>Antar Kota</strong><small>Perjalanan ke berbagai kota di Indonesia</small></span>
               </button>
               <button class="bk-mode-option" id="bkInternational" type="button" aria-pressed="false">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3.5 9h17M3.5 15h17M12 3c2.3 2.5 3.4 5.5 3.4 9s-1.1 6.5-3.4 9c-2.3-2.5-3.4-5.5-3.4-9S9.7 5.5 12 3Z"/></svg>
-                <span><strong>Antar Negara</strong><small>Rencanakan perjalanan lintas negara</small></span>
+                <span><strong>Antar Negara</strong><small>Perjalanan ke luar negeri</small></span>
               </button>
             </div>
           </div>
@@ -196,7 +355,7 @@
               <span class="bk-step-number">02</span>
               <span>
                 <strong>Pilih moda transportasi</strong>
-                <small>Sesuaikan dengan jarak dan kebutuhan perjalanan</small>
+                <small>Pilih perjalanan darat atau lihat perkiraan perjalanan udara.</small>
               </span>
             </div>
             <div class="bk-transport" role="group" aria-label="Moda transportasi">
@@ -224,7 +383,7 @@
             </div>
           </div>
           <p class="bk-international-note" id="bkInternationalNote" hidden>
-            Rute lintas negara menampilkan simulasi jadwal dan estimasi tarif. Pastikan dokumen perjalanan dan persyaratan imigrasi, serta konfirmasi ketersediaan layanan sebelum berangkat.
+            Untuk perjalanan ke luar negeri, pastikan dokumen perjalanan Anda lengkap. Hubungi kami untuk memastikan jadwal dan layanan.
           </p>
           <div class="bk-body">
             <div class="bk-row">
@@ -268,8 +427,8 @@
               <b id="bkPicked"></b>
             </div>
             <div class="bk-row">
-              <div class="bk-field"><label class="bk-h" for="bkName">Nama lengkap</label><input id="bkName" autocomplete="name" placeholder="Sesuai identitas"></div>
-              <div class="bk-field"><label class="bk-h" for="bkPhone">Nomor HP / WhatsApp</label><input id="bkPhone" type="tel" autocomplete="tel" placeholder="08xxxxxxxxxx"></div>
+              <div class="bk-field"><label class="bk-h" for="bkName">Nama lengkap</label><input id="bkName" autocomplete="name" minlength="2" maxlength="120" required placeholder="Sesuai identitas"></div>
+              <div class="bk-field"><label class="bk-h" for="bkPhone">Nomor HP / WhatsApp</label><input id="bkPhone" type="tel" inputmode="tel" autocomplete="tel" minlength="9" maxlength="25" required placeholder="08xxxxxxxxxx"></div>
             </div>
             <div class="bk-err" id="bkErr2" role="alert"></div>
             <button class="bk-cta" id="bkPay" type="button">Lanjutkan Pemesanan</button>
@@ -278,22 +437,22 @@
         </div>
 
         <!-- Langkah 3: konfirmasi -->
-        <div id="bkDone" class="bk-hide">
+        <div id="bkDone" class="bk-hide" role="dialog" aria-modal="true" aria-labelledby="bkSummaryTitle">
           <div class="bk-body bk-confirmation">
             <header class="bk-confirmation-header">
               <span class="bk-success-mark" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4L19 6"/></svg>
               </span>
               <div>
-                <span class="bk-confirmation-eyebrow">PERMINTAAN BOOKING DIBUAT</span>
+              <span class="bk-confirmation-eyebrow">PEMESANAN TERCATAT</span>
                 <h3>Detail perjalanan Anda</h3>
-                <p id="bkDoneMessage">Permintaan perjalanan siap dikonfirmasi. Simpan kode ini dan kirim ke WhatsApp kami.</p>
+              <p id="bkDoneMessage">Klik tombol WhatsApp di bawah untuk mengirim konfirmasi booking Anda.</p>
               </div>
             </header>
 
-            <section class="bk-reference" aria-label="Kode booking">
+            <section class="bk-reference" aria-label="Kode pemesanan">
               <div>
-                <span class="bk-detail-label">KODE BOOKING</span>
+                <span class="bk-detail-label">KODE PEMESANAN</span>
                 <small>Simpan kode ini untuk konfirmasi perjalanan.</small>
               </div>
               <div class="bk-code" id="bkCode"></div>
@@ -314,187 +473,156 @@
           </div>
         </div>
       </div>
+
     </div>
   </section>
 
-  <!-- RUTE POPULER -->
-  <section class="section routes-section">
+  </section>
+
+  <!-- DOKUMENTASI -->
+  <section class="section documentation-section" id="dokumentasi">
     <div class="container">
       <div class="section-header">
-        <span class="section-label">Destinasi</span>
-        <h2>Rute Populer</h2>
-        <p>Pilihan rute favorit untuk perjalanan bersama Harlie Tour.</p>
+        <span class="section-label">Momen Perjalanan</span>
+        <h2>Dokumentasi Harlie Tour</h2>
+        <p>Foto berikut merupakan ilustrasi destinasi untuk membantu Anda menemukan inspirasi perjalanan.</p>
       </div>
-
-      <div class="routes-grid">
-        <article class="route-card">
-          <div class="route-badge popular">Populer</div>
-          <div class="route-cities">
-            <div class="route-city">
-              <strong>Jakarta</strong>
-              <small>Grogol / Bintaro</small>
-            </div>
-            <div class="route-arrow">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </div>
-            <div class="route-city">
-              <strong>Bandung</strong>
-              <small>Pasteur / Dipatiukur</small>
-            </div>
-          </div>
-          <div class="route-meta">
-            <span>± 3 jam</span>
-            <span class="route-price">mulai Rp 75.000</span>
-          </div>
-        </article>
-
-        <article class="route-card">
-          <div class="route-badge favorite">Favorit</div>
-          <div class="route-cities">
-            <div class="route-city">
-              <strong>Jakarta</strong>
-              <small>Bintaro</small>
-            </div>
-            <div class="route-arrow">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </div>
-            <div class="route-city">
-              <strong>Yogyakarta</strong>
-              <small>Seturan / Giwangan</small>
-            </div>
-          </div>
-          <div class="route-meta">
-            <span>± 9 jam</span>
-            <span class="route-price">mulai Rp 145.000</span>
-          </div>
-        </article>
-
-        <article class="route-card">
-          <div class="route-badge airport">Airport</div>
-          <div class="route-cities">
-            <div class="route-city">
-              <strong>Bandung</strong>
-              <small>Dipatiukur</small>
-            </div>
-            <div class="route-arrow">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </div>
-            <div class="route-city">
-              <strong>Soekarno-Hatta</strong>
-              <small>Terminal 1–3</small>
-            </div>
-          </div>
-          <div class="route-meta">
-            <span>± 3.5 jam</span>
-            <span class="route-price">mulai Rp 165.000</span>
-          </div>
-        </article>
-
-        <article class="route-card">
-          <div class="route-badge new">Baru</div>
-          <div class="route-cities">
-            <div class="route-city">
-              <strong>Semarang</strong>
-              <small>Karangayu</small>
-            </div>
-            <div class="route-arrow">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </div>
-            <div class="route-city">
-              <strong>Surabaya</strong>
-              <small>Bungurasih</small>
-            </div>
-          </div>
-          <div class="route-meta">
-            <span>± 5 jam</span>
-            <span class="route-price">mulai Rp 120.000</span>
-          </div>
-        </article>
+      <div class="documentation-filters" role="group" aria-label="Filter kategori dokumentasi">
+        <button class="documentation-filter active" type="button" data-filter="all" aria-pressed="true">View All</button>
+        <button class="documentation-filter" type="button" data-filter="city" aria-pressed="false">City Tour</button>
+        <button class="documentation-filter" type="button" data-filter="coast" aria-pressed="false">Pantai &amp; Laut</button>
+        <button class="documentation-filter" type="button" data-filter="mountain" aria-pressed="false">Gunung</button>
+        <button class="documentation-filter" type="button" data-filter="adventure" aria-pressed="false">Petualangan</button>
+        <button class="documentation-filter" type="button" data-filter="outbound" aria-pressed="false">Outbound</button>
+        <button class="documentation-filter" type="button" data-filter="gathering" aria-pressed="false">Outing &amp; Gathering</button>
+      </div>
+      <div class="documentation-grid">
+        <article class="documentation-card" data-categories="mountain adventure"><img src="https://localexperience.id/media/tours/state_banner/jawa_timur.webp" alt="Pemandangan alam Gunung Bromo saat perjalanan wisata" loading="lazy"><div class="documentation-caption"><span>Gunung · Petualangan</span><h3>Amazing Sunrise Bromo</h3></div></article>
+        <article class="documentation-card" data-categories="coast adventure"><img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&amp;fit=crop&amp;w=1000&amp;q=85" alt="Pantai dan laut tropis Karimunjawa" loading="lazy"><div class="documentation-caption"><span>Pantai &amp; Laut · Petualangan</span><h3>Jelajah Karimunjawa</h3></div></article>
+        <article class="documentation-card" data-categories="outbound gathering adventure"><img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&amp;fit=crop&amp;w=1000&amp;q=85" alt="Teman-teman menikmati kegiatan bersama di luar ruang" loading="lazy"><div class="documentation-caption"><span>Outbound · Outing &amp; Gathering</span><h3>Keseruan Fun Games di Lembang</h3></div></article>
+        <article class="documentation-card" data-categories="mountain gathering"><img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&amp;fit=crop&amp;w=1000&amp;q=85" alt="Pemandangan pegunungan dan danau saat liburan keluarga" loading="lazy"><div class="documentation-caption"><span>Gunung · Outing &amp; Gathering</span><h3>Liburan Keluarga di Dieng</h3></div></article>
+        <article class="documentation-card" data-categories="city"><img src="https://dvgddkosknh6r.cloudfront.net/live/media/img/1765328386-rabu3.jpg" alt="Gedung Sate, ikon wisata Kota Bandung" loading="lazy"><div class="documentation-caption"><span>City Tour</span><h3>Menjelajah Kota Bandung</h3></div></article>
+        <article class="documentation-card" data-categories="coast adventure"><img src="https://static.tripzilla.id/media/20090/conversions/2-Pantai-Teluk-Ijo-w768.webp" alt="Teluk Hijau dengan pantai dan hutan tropis di Banyuwangi" loading="lazy"><div class="documentation-caption"><span>Pantai &amp; Laut · Petualangan</span><h3>Pesona Teluk Hijau</h3></div></article>
+        <article class="documentation-card" data-categories="mountain adventure"><img src="https://images.unsplash.com/photo-1654046920188-6e7ee051d7a4?auto=format&amp;fit=crop&amp;fm=jpg&amp;q=85&amp;w=1000" alt="Gunung Rinjani dan danau kawah di Lombok" loading="lazy"><div class="documentation-caption"><span>Gunung · Petualangan</span><h3>Menikmati Alam Lombok</h3></div></article>
+        <article class="documentation-card" data-categories="coast gathering"><img src="https://radarjabar.disway.id/upload/c04a53632587838a2216b045d3dddaac.jpg" alt="Pulau kecil tropis di Kepulauan Seribu" loading="lazy"><div class="documentation-caption"><span>Pantai &amp; Laut · Outing</span><h3>Waktu Santai di Pulau Seribu</h3></div></article>
       </div>
     </div>
   </section>
 
-  <!-- ULASAN -->
-  <section class="section reviews-section" id="ulasan">
+  <!-- INFORMASI PERJALANAN -->
+  <section class="section journey-info-section" id="info-perjalanan">
     <div class="container">
       <div class="section-header">
-        <span class="section-label">Testimoni</span>
-        <h2>Apa Kata Mereka?</h2>
-        <p>Rasakan perjalanan yang nyaman bersama Harlie Tour.</p>
+        <span class="section-label">Sebelum Memesan</span>
+        <h2>Informasi Perjalanan</h2>
+        <p>Ketahui hal penting tentang jadwal, tarif, dan konfirmasi sebelum mengirim permintaan booking.</p>
       </div>
 
-      <div class="reviews-grid">
-        <article class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">“Pelayanannya ramah banget, armadanya bersih dan AC-nya dingin. Driver juga driving-nya nyaman. Pasti naik lagi!”</p>
-          <div class="review-author">
-            <div class="author-avatar">AS</div>
-            <div>
-              <strong>Aulia Safitri</strong>
-              <span>Jakarta → Bandung</span>
-            </div>
-          </div>
+      <div class="journey-info-grid">
+        <article class="journey-info-card">
+          <span class="journey-info-number">01</span>
+          <h3>Jadwal shuttle</h3>
+          <p>Daftar jadwal yang tampil adalah pilihan keberangkatan untuk rute yang tersedia. Ketersediaan kursi diperiksa kembali saat permintaan booking dikirim.</p>
         </article>
-
-        <article class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">“Booking online gampang, e-ticket langsung masuk WA. Pool-nya strategis, gak perlu jauh-jauh. Recommended deh.”</p>
-          <div class="review-author">
-            <div class="author-avatar">RF</div>
-            <div>
-              <strong>Rizky Fauzan</strong>
-              <span>Bandung → Yogyakarta</span>
-            </div>
-          </div>
+        <article class="journey-info-card">
+          <span class="journey-info-number">02</span>
+          <h3>Tarif dan penerbangan</h3>
+          <p>Tarif shuttle serta jadwal dan tarif pesawat di halaman ini merupakan perkiraan. Hubungi tim Harlie Tour untuk memastikan informasi terbaru.</p>
         </article>
-
-        <article class="review-card">
-          <div class="review-stars">★★★★☆</div>
-          <p class="review-text">“Harga bersaing, kursi executive leg space-nya lega. Cocok buat perjalanan jauh. Terima kasih Harlie Tour!”</p>
-          <div class="review-author">
-            <div class="author-avatar">DW</div>
-            <div>
-              <strong>Dewi Wulandari</strong>
-              <span>Semarang → Surabaya</span>
-            </div>
-          </div>
+        <article class="journey-info-card">
+          <span class="journey-info-number">03</span>
+          <h3>Status pemesanan</h3>
+          <p>Form booking mencatat permintaan dengan status menunggu konfirmasi. Ini belum merupakan tiket terbit atau bukti pembayaran.</p>
         </article>
-
-        <article class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">“Airport shuttle-nya on time banget. Dari Bandung ke Soetta tinggal duduk santai, sampai terminal langsung. Mantap.”</p>
-          <div class="review-author">
-            <div class="author-avatar">BP</div>
-            <div>
-              <strong>Budi Pratama</strong>
-              <span>Bandung → Soetta</span>
-            </div>
-          </div>
+        <article class="journey-info-card">
+          <span class="journey-info-number">04</span>
+          <h3>Konfirmasi melalui WhatsApp</h3>
+          <p>Simpan kode pemesanan yang muncul setelah pengiriman, lalu gunakan tombol WhatsApp untuk melanjutkan konfirmasi dengan tim kami.</p>
         </article>
       </div>
     </div>
   </section>
+  <!-- ULASAN PELANGGAN -->
+  <section class="section customer-reviews-section" id="ulasan">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Rating Pelanggan</span>
+        <h2>Ulasan Perjalanan</h2>
+        <p>Contoh tampilan rating dan ulasan. Nilai berikut belum berasal dari ulasan pelanggan terverifikasi.</p>
+      </div>
 
+      <svg class="rating-icon-library" aria-hidden="true" focusable="false">
+        <symbol id="ratingStar" viewBox="0 0 24 24"><path d="M12 2.5 14.9 8.4l6.5.9-4.7 4.6 1.1 6.5L12 17.3l-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"/></symbol>
+      </svg>
+
+      <div class="rating-overview" role="group" aria-label="Contoh rating pelanggan">
+        <strong class="rating-score">4.7</strong>
+        <div>
+          <div class="rating-stars" role="img" aria-label="Contoh rating 4,7 dari 5">
+            <svg class="rating-star-icon filled" aria-hidden="true"><use href="#ratingStar"/></svg>
+            <svg class="rating-star-icon filled" aria-hidden="true"><use href="#ratingStar"/></svg>
+            <svg class="rating-star-icon filled" aria-hidden="true"><use href="#ratingStar"/></svg>
+            <svg class="rating-star-icon filled" aria-hidden="true"><use href="#ratingStar"/></svg>
+            <svg class="rating-star-icon filled" aria-hidden="true"><use href="#ratingStar"/></svg>
+          </div>
+          <span>Contoh rating dari 5</span>
+        </div>
+      </div>
+
+      <div class="customer-reviews-grid">
+        <article class="customer-review-card">
+          <div class="customer-review-heading">
+            <span class="customer-review-avatar" aria-hidden="true">P</span>
+            <div><strong>Penumpang shuttle</strong><span>Rute demo: Jakarta - Bandung</span></div>
+          </div>
+          <div class="rating-stars" role="img" aria-label="Contoh rating 5 dari 5">
+            <svg class="rating-star-icon filled" aria-hidden="true"><use href="#ratingStar"/></svg><svg class="rating-star-icon filled" aria-hidden="true"><use href="#ratingStar"/></svg><svg class="rating-star-icon filled" aria-hidden="true"><use href="#ratingStar"/></svg><svg class="rating-star-icon filled" aria-hidden="true"><use href="#ratingStar"/></svg><svg class="rating-star-icon filled" aria-hidden="true"><use href="#ratingStar"/></svg>
+          </div>
+          <p>Contoh ulasan: proses pemesanan mudah dan perjalanan terasa nyaman.</p>
+        </article>
+        <article class="customer-review-card">
+          <div class="customer-review-heading">
+            <span class="customer-review-avatar" aria-hidden="true">P</span>
+            <div><strong>Penumpang shuttle</strong><span>Rute demo: Bandung - Yogyakarta</span></div>
+          </div>
+          <div class="rating-stars" role="img" aria-label="Contoh rating 4 dari 5">
+            <svg class="rating-star-icon filled" aria-hidden="true"><use href="#ratingStar"/></svg><svg class="rating-star-icon filled" aria-hidden="true"><use href="#ratingStar"/></svg><svg class="rating-star-icon filled" aria-hidden="true"><use href="#ratingStar"/></svg><svg class="rating-star-icon filled" aria-hidden="true"><use href="#ratingStar"/></svg><svg class="rating-star-icon empty" aria-hidden="true"><use href="#ratingStar"/></svg>
+          </div>
+          <p>Contoh ulasan: informasi jadwal mudah ditemukan dan layanan ramah.</p>
+        </article>
+        <article class="customer-review-card">
+          <div class="customer-review-heading">
+            <span class="customer-review-avatar" aria-hidden="true">P</span>
+            <div><strong>Penumpang shuttle</strong><span>Rute demo: Semarang - Surabaya</span></div>
+          </div>
+          <div class="rating-stars" role="img" aria-label="Contoh rating 5 dari 5">
+            <svg class="rating-star-icon filled" aria-hidden="true"><use href="#ratingStar"/></svg><svg class="rating-star-icon filled" aria-hidden="true"><use href="#ratingStar"/></svg><svg class="rating-star-icon filled" aria-hidden="true"><use href="#ratingStar"/></svg><svg class="rating-star-icon filled" aria-hidden="true"><use href="#ratingStar"/></svg><svg class="rating-star-icon filled" aria-hidden="true"><use href="#ratingStar"/></svg>
+          </div>
+          <p>Contoh ulasan: perjalanan sesuai rencana dan pemesanan terasa praktis.</p>
+        </article>
+      </div>
+    </div>
+  </section>
   <!-- CTA -->
   <section class="cta-section">
     <div class="container">
       <div class="cta-box">
-        <h2>Siap berangkat hari ini?</h2>
-        <p>Pesan tiket Anda dan nikmati perjalanan yang lebih nyaman bersama Harlie Tour.</p>
-        <a href="#booking" class="btn btn-white btn-lg">Booking Tiket Sekarang</a>
+        <h2>Ada yang ingin ditanyakan?</h2>
+        <p>Hubungi tim Harlie Tour untuk memastikan rute, jadwal, dan harga.</p>
+        <a href="#booking" class="btn btn-white btn-lg">Mulai Booking</a>
       </div>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="footer">
+  <footer class="footer" id="kontak">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="#beranda" class="logo">
             <img class="logo-image" src="assets/harlie-tour-logo.png" alt="Logo Harlie Tour Indonesia">
           </a>
-          <p>Harlie Tour menyediakan informasi perjalanan dan membantu Anda merencanakan perjalanan dengan nyaman, praktis, dan mudah.</p>
+          <p>Pilih rute dan tanggal, lalu kirim permintaan pemesanan kepada tim kami.</p>
         </div>
 
         <div>
@@ -502,8 +630,9 @@
           <ul>
             <li><a href="#beranda">Beranda</a></li>
             <li><a href="#tentang">Tentang Kami</a></li>
-            <li><a href="#ulasan">Ulasan</a></li>
-            <li><a href="#booking">Booking</a></li>
+            <li><a href="#info-perjalanan">Informasi Perjalanan</a></li>
+            <li><a href="#ulasan">Ulasan Pelanggan</a></li>
+            <li><a href="#booking">Pemesanan</a></li>
           </ul>
         </div>
 
@@ -511,9 +640,9 @@
           <h4>Layanan</h4>
           <ul>
             <li><a href="#booking">Shuttle Antarkota</a></li>
-            <li><a href="#booking">Airport Transfer</a></li>
+            <li><a href="#booking">Antar-jemput bandara</a></li>
             <li><a href="#">Sewa Armada</a></li>
-            <li><a href="#">Paket Express</a></li>
+            <li><a href="#">Paket ekspres</a></li>
           </ul>
         </div>
 
@@ -543,7 +672,7 @@
       </div>
 
       <div class="footer-bottom">
-        <p>© 2026 Harlie Tour Indonesia. All rights reserved.</p>
+        <p>© 2026 Harlie Tour Indonesia. Hak cipta dilindungi.</p>
       </div>
     </div>
   </footer>
@@ -555,7 +684,7 @@
     </svg>
   </a>
 
-  <script src="scripts.js"></script>
-  <script src="booking.js"></script>
+  <script src="scripts.js?v=8"></script>
+  <script src="booking.js?v=14"></script>
 </body>
 </html>

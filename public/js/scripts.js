@@ -2,6 +2,8 @@
 const navbar = document.getElementById('navbar');
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
+const aboutDropdown = document.getElementById('aboutDropdown');
+const aboutMenuToggle = document.getElementById('aboutMenuToggle');
 
 /* ========== Navbar scroll effect ========== */
 window.addEventListener('scroll', () => {
@@ -13,13 +15,28 @@ window.addEventListener('scroll', () => {
 });
 
 /* ========== Mobile menu ========== */
-hamburger.addEventListener('click', () => {
-  navLinks.classList.toggle('open');
-});
+if (hamburger && navLinks) {
+  hamburger.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+    hamburger.setAttribute('aria-label', isOpen ? 'Tutup menu' : 'Buka menu');
+  });
+}
 
-navLinks.querySelectorAll('a').forEach(link => {
+if (aboutDropdown && aboutMenuToggle) {
+  aboutMenuToggle.addEventListener('click', () => {
+    const isOpen = aboutDropdown.classList.toggle('open');
+    aboutMenuToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+}
+
+navLinks?.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
     navLinks.classList.remove('open');
+    hamburger?.setAttribute('aria-expanded', 'false');
+    hamburger?.setAttribute('aria-label', 'Buka menu');
+    aboutDropdown?.classList.remove('open');
+    aboutMenuToggle?.setAttribute('aria-expanded', 'false');
   });
 });
 
@@ -47,13 +64,64 @@ window.addEventListener('scroll', () => {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     const href = this.getAttribute('href');
-    if (href === '#') return;
+    // The booking script replaces # on the WhatsApp link after a booking succeeds.
+    // Only handle actual in-page anchors here; ignore that dynamic external URL.
+    if (!href || href === '#' || !href.startsWith('#')) return;
     const target = document.querySelector(href);
     if (target) {
       e.preventDefault();
-      const offset = 80;
+      const offset = window.innerWidth >= 1080 ? 122 : 84;
       const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
       window.scrollTo({ top, behavior: 'smooth' });
     }
   });
 });
+
+/* ========== Documentation category filters ========== */
+const documentationFilters = document.querySelectorAll('.documentation-filter');
+const documentationCards = document.querySelectorAll('.documentation-card');
+
+documentationFilters.forEach(button => {
+  button.addEventListener('click', () => {
+    const category = button.dataset.filter;
+    documentationFilters.forEach(filter => {
+      const isActive = filter === button;
+      filter.classList.toggle('active', isActive);
+      filter.setAttribute('aria-pressed', String(isActive));
+    });
+    documentationCards.forEach(card => {
+      const categories = (card.dataset.categories || '').split(/\s+/);
+      const shouldHide = category !== 'all' && !categories.includes(category);
+      card.hidden = shouldHide;
+      card.classList.remove('filter-in');
+      if (!shouldHide) {
+        void card.offsetWidth;
+        card.classList.add('filter-in');
+      }
+    });
+  });
+});
+
+/* ========== Scroll entrance animation ========== */
+const revealItems = document.querySelectorAll(
+  '.section-header, .tour-package-group, .booking-section, .documentation-card, .journey-info-card, .customer-review-card, .fleet-rental-card'
+);
+
+if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -24px 0px' });
+
+  revealItems.forEach((item, index) => {
+    item.classList.add('scroll-reveal');
+    if (item.matches('.documentation-card, .journey-info-card, .customer-review-card, .fleet-rental-card')) {
+      item.style.transitionDelay = `${(index % 4) * 70}ms`;
+    }
+    revealObserver.observe(item);
+  });
+}
